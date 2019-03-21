@@ -1,5 +1,5 @@
 import os
-from fs.directorys import Directory
+from .directorys import Directory
 
 
 class Files(Directory):
@@ -12,8 +12,9 @@ class Files(Directory):
         Создает файл и производит все необходимые проверки
         Метод создает при необходимости все необходимые директории
         Если файл уже существует - он не пересоздается
-        :param path_to_file: Путь к файлу
-        :return:
+
+        :param path_to_file: <str> Путь к файлу
+        :return: <bool> True в случае успеха
         """
         path = os.path.dirname(path_to_file)
 
@@ -23,6 +24,8 @@ class Files(Directory):
         else:
             self._create_directory(path)
             open(path_to_file, 'w').close()
+
+        return True
 
     @staticmethod
     def _clear_file(path_to_file):
@@ -42,7 +45,7 @@ class Files(Directory):
     def _is_not_zero_file(path_to_file):
         """
         Проверяет файл на пустоту
-        :param path_to_file: Путь к файлу
-        :return: Возвращает Boolean значение
+        :param path_to_file: <str> Путь к файлу
+        :return: <bool> Возвращает Boolean значение
         """
         return os.path.isfile(path_to_file) and os.path.getsize(path_to_file) > 0

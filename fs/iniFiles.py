@@ -1,4 +1,4 @@
-from fs.files import Files
+from .files import Files
 from configparser import ConfigParser
 
 
