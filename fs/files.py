@@ -1,51 +1,66 @@
 import os
-from .directorys import Directory
+from fs.directory import Directory
 
 
 class Files(Directory):
-    """Класс для работы с файлами"""
     def __init__(self):
         super().__init__()
 
-    def _create_file(self, path_to_file):
+    def _create_file(self, path_to_file=''):
         """
-        Создает файл и производит все необходимые проверки
-        Метод создает при необходимости все необходимые директории
-        Если файл уже существует - он не пересоздается
-
+        Метод создания файла
         :param path_to_file: <str> Путь к файлу
-        :return: <bool> True в случае успеха
+        :return: <bool> Успешность операции
         """
-        path = os.path.dirname(path_to_file)
+        directory = os.path.dirname(path_to_file)
 
-        if os.path.exists(path):
-            if not os.path.exists(path_to_file):
-                open(path_to_file, 'w').close()
-        else:
-            self._create_directory(path)
+        if not os.path.isdir(directory):
+            self._create_dir(directory)
             open(path_to_file, 'w').close()
+            return True
+        else:
+            if os.path.isfile(path_to_file):
+                return False
+            else:
+                open(path_to_file, 'w').close()
+                return True
+
+    @staticmethod
+    def _clear_file(path_to_file=''):
+        """
+        Метод очистки файла
+        :param path_to_file: <str> Путь к файлу
+        :return: <bool> Успешность операции
+        """
+        if not os.path.isfile(path_to_file):
+            return False
+        open(path_to_file, 'w').close()
 
         return True
 
     @staticmethod
-    def _clear_file(path_to_file):
-        """Очищает файл если он существует"""
+    def _del_file(path_to_file=''):
+        """
+        Удаление файла
+        :param path_to_file: <str> Путь к файлу
+        :return: <bool> Успешность операции
+        """
         if not os.path.isfile(path_to_file):
-            return ''
+            return False
 
-        open(path_to_file, 'w').close()
+        os.remove(path_to_file)
 
-    @staticmethod
-    def _delete_file(path_to_file=''):
-        """Метод для удаления файла"""
-        if os.path.isfile(path_to_file):
-            os.remove(path_to_file)
+        return True
 
     @staticmethod
-    def _is_not_zero_file(path_to_file):
+    def _is_file(path_to_file):
+        return os.path.isfile(path_to_file)
+
+    @staticmethod
+    def _is_zero_file(path_to_file=''):
         """
         Проверяет файл на пустоту
         :param path_to_file: <str> Путь к файлу
         :return: <bool> Возвращает Boolean значение
         """
-        return os.path.isfile(path_to_file) and os.path.getsize(path_to_file) > 0
+        return not (os.path.isfile(path_to_file) and os.path.getsize(path_to_file) > 0)
