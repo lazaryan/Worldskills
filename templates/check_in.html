@@ -1,28 +1,29 @@
 {% extends 'base/card.html' %}
 
-{% block title %}LogIn{% endblock %}
+{% block title %}CheckIn{% endblock %}
 
-{% block card_title %}Log in{% endblock %}
+{% block card_title %}Check in{% endblock %}
 
 {% set inputs=[
-	{"title": "Public key:", "name": "public_key"},
-	{"title": "Private key:", "name": "private_key"}] 
+	{"title": "Name:", "name": "name"},
+	{"title": "Email:", "name": "email"}]
 %}
+
 {% block card_body %}
-<form action="#" id="logForm">
-	{% for input in inputs %}
+<form action="#" id="checkInForm">
+    {% for input in inputs %}
 		<div class="card-form__field">
 			<label class="card-form__label" for="{{ input.name }}"> {{ input.title }} </label>
-			<input class="card-form__input" type="text" name="{{ input.name }}" maxlength="150" required="required"/>
+			<input class="card-form__input" type="text" name="{{ input.name }}" maxlength="70" required="required"/>
 		</div>
 	{% endfor %}
 </form>
-<button class="card__action" id="cardAction">Войти</button>
+<button class="card__action" id="cardAction">Регистрация</button>
 {% endblock %}
 
 {% block scripts %}
 <script>
-var form = document.querySelector('#logForm');
+var form = document.querySelector('#checkInForm');
 var bth = document.querySelector('#cardAction');
 
 bth.addEventListener('click', function() {
@@ -34,7 +35,7 @@ bth.addEventListener('click', function() {
 	}
 
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', '/todo/api/login', true);
+	xhr.open('POST', '/todo/api/check_in', true);
 	xhr.setRequestHeader("Content-type", "application/json");
 
 	xhr.send(JSON.stringify(text));
@@ -46,11 +47,11 @@ bth.addEventListener('click', function() {
 			var data = JSON.parse(xhr.responseText);
 
 			if (data.data = 'OK') {
-				document.location.href = "{{ url_for('index') }}"
+				document.location.href = "{{ url_for('my_keys') }}"
 			}
 		}
 	}
 });
+
 </script>
 {% endblock %}
-

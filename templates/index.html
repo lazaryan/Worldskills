@@ -1,1 +1,21 @@
 {% extends 'base/base.html' %}
+
+{% block links %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/index.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div class="main">
+        <div class="main__content">
+        	<div class="main__status">
+        		<div class="user">
+        			User .... (id user)
+        		</div>
+        		<div class="money">
+        			Posre: ... (count) BL
+        		</div>
+        	</div>
+        	<div class="main__form"></div>
+        </div>
+    </div>
+{% endblock %}

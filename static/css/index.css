@@ -1,0 +1,37 @@
+.main {
+	width: 100vw;
+	height: 100vh;
+	background-color: #eee;
+	padding-top: 100px;
+	box-sizing: border-box;
+}
+
+.user {
+	font-size: 35px;
+	line-height: 45px;
+	margin-bottom: 20px;
+}
+
+.money {
+	font-size: 30px;
+	line-height: 40px;
+}
+
+.main__content {
+	width: 80%;
+	margin: auto;
+	height: 85%;
+	display: flex;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	box-sizing: border-box;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+
+.main__form {
+	width: 400px;
+	height: 600px;
+	border-radius: 10px;
+	border: 2px solid #222;
+}

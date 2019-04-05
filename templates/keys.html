@@ -1,0 +1,24 @@
+{% extends 'base/card.html' %}
+
+{% block title %}Keys{% endblock %}
+
+{% block card_title %}My keys{% endblock %}
+
+{%block card_body %}
+    <div class="card__description">
+        <p class="card__description_text"><small class="card__description_small">
+                Не в коем случае не показывайте ваши ключи кому либо еще. Это поставит ваш кошелек под угрозу
+        </small></p>
+        <p class="card__description_text"><small class="card__description_small">
+                В случае утери ключей, доступ к кашельку будет невозможна
+        </small></p>
+    </div>
+    <div class="card-form__field">
+        <p class="card-form__label">Public key: </p>
+        <p class="card-form__input card-form__input_scroll"> {{ keys['public_key'] }} </p>
+    </div>
+    <div class="card-form__field">
+        <p class="card-form__label">Private key: </p>
+        <p class="card-form__input card-form__input_scroll"> {{ keys['private_key'] }} </p>
+    </div>
+{% endblock %}

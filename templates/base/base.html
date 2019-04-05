@@ -28,6 +28,8 @@
 		{% else %}
 			<a href="{{url_for('login')}}" class="header__link">Войти</a>
 		{% endif %}
+
+		<a href="{{url_for('check_in')}}" class="header__link">Регистрация</a>
 	</header>
     {% block content %}{% endblock %}
 
