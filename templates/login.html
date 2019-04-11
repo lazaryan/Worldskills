@@ -1,56 +1,11 @@
 {% extends 'base/card.html' %}
 
-{% block title %}LogIn{% endblock %}
+{% set title = 'LogIn' %}
 
-{% block card_title %}Log in{% endblock %}
-
-{% set inputs=[
-	{"title": "Public key:", "name": "public_key"},
-	{"title": "Private key:", "name": "private_key"}] 
-%}
-{% block card_body %}
-<form action="#" id="logForm">
-	{% for input in inputs %}
-		<div class="card-form__field">
-			<label class="card-form__label" for="{{ input.name }}"> {{ input.title }} </label>
-			<input class="card-form__input" type="text" name="{{ input.name }}" maxlength="150" required="required"/>
-		</div>
-	{% endfor %}
+{% block form %}
+<form action="#" id="loginForm">
+	<header class="card__header">
+		<h2 class="card__title">Log In</h2>
+	</header>
 </form>
-<button class="card__action" id="cardAction">Войти</button>
 {% endblock %}
-
-{% block scripts %}
-<script>
-var form = document.querySelector('#logForm');
-var bth = document.querySelector('#cardAction');
-
-bth.addEventListener('click', function() {
-	var inputs = form.querySelectorAll('input');
-	var text={};
-
-	for (var i = 0; i < inputs.length; i++) {
-		text[inputs[i].name] = inputs[i].value
-	}
-
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', '/todo/api/login', true);
-	xhr.setRequestHeader("Content-type", "application/json");
-
-	xhr.send(JSON.stringify(text));
-
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState != 4) return;
-
-		if (xhr.status == 200) {
-			var data = JSON.parse(xhr.responseText);
-
-			if (data.data = 'OK') {
-				document.location.href = "{{ url_for('index') }}"
-			}
-		}
-	}
-});
-</script>
-{% endblock %}
-

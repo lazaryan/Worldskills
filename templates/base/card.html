@@ -1,23 +1,22 @@
 {% extends 'base/base.html' %}
 
-{% set links=['card.css'] %}
+{% if not title %}
+	{% set title = 'Card' %}
+{% endif %}
 
 {% block links %}
-    {% for link in links %}
-        <link rel="stylesheet" href="{{url_for('static', filename='css/' + link)}}">
-    {% endfor %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/card.css')}}">
 {% endblock %}
 
 {% block content %}
-    <div class="card_wrapper">
-    	<div class="card">
-    		<div class="card__logo">
-    			<div class="card__logo-circle">BL</div>
-    		</div>
-    		<h2 class="card__title">{% block card_title %}Card{% endblock %}</h2>
-    		<div class="card_body">
-    			{%block card_body %}{% endblock %}
-    		</div>
-    	</div>
-    </div>
+<div class="card_wrapper">
+	<div class="card" style="{{liner_styles}}">
+		<header class="card__header">
+			<div class="card__icon">BL</div>
+		</header>
+		<div class="card__form">
+			{% block form %}{% endblock %}
+		</div>
+	</div>
+</div>
 {% endblock %}

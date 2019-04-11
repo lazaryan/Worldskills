@@ -5,33 +5,21 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> {{ title or 'BCH' }} </title>
 
     <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
     {% block links %}{% endblock %}
-
-    <title>{% block title %}BCH{% endblock %}</title>
 </head>
-<body id="body">
-	<noscript>
-		<div class="noscript">
-			<div class="noscript-inner">
-				<p><strong>JavaScript не поддерживается этим браузером или он отключен</strong></p>
-			</div>
-		</div>
-	</noscript>
-
-	<header class="header">
-		{% if action %}
-			<a href="{{url_for('index')}}" class="header__link">Главная</a>
-			<a href="{{url_for('my_keys')}}" class="header__link">Мои ключи</a>
-			<a href="{{url_for('unlogin')}}" class="header__link">Выйти</a>
-		{% else %}
-			<a href="{{url_for('login')}}" class="header__link">Войти</a>
-		{% endif %}
-
-		<a href="{{url_for('check_in')}}" class="header__link">Регистрация</a>
-	</header>
-    {% block content %}{% endblock %}
+<body>
+    <header class="header">
+    	<a href="{{url_for('index')}}" class="header__link">Главная</a>
+        <a href="{{url_for('login')}}" class="header__link">Вход</a>
+    	<a href="{{url_for('registration')}}" class="header__link">Регистрация</a>
+    </header>
+    <main class="main">
+    	{% block content %}
+    	{% endblock %}
+    </main>
 
     {% block scripts %}{% endblock %}
 </body>

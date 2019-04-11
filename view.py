@@ -1,52 +1,43 @@
 from app import app
-from flask import render_template, redirect, url_for
-from objects.keys import Keys
-import rsa
+from flask import render_template, redirect, url_for, request
+from fs.json_files import JsonFiles
 
 
 @app.route('/')
 def index():
-    if not action():
-        return redirect(url_for('login'))
+    if not action_user():
+        return redirect('registration')
 
-    # text = 'test'
-    # keys = Keys().get_keys()
-    #
-    # message = 'hello Alisa!'.encode('utf8')
-    # print(keys['public_key'])
-    # crypto = rsa.encrypt(message, keys['public_key'].encode('utf8'))  # Зашифровка
-    # message = rsa.decrypt(crypto, keys['private_key'].encode('utf8'))  # Расшифровка
-    # print(message.decode('utf8'))
+    return render_template('index.html')
 
-    return render_template('index.html', action=True)
+
+@app.route('/registration')
+def registration():
+    return render_template('register.html')
 
 
 @app.route('/login')
 def login():
-    if action():
-        return redirect(url_for('index'))
-
     return render_template('login.html')
 
 
-@app.route('/unlogin')
-def unlogin():
-    Keys().delete_keys()
-
-    return redirect(url_for('login'))
-
-
 @app.route('/keys')
-def my_keys():
-    if not action():
-        return redirect(url_for('login'))
+def keys():
+    token = request.args.get('token')
 
-    return render_template('keys.html', action=True, keys=Keys().get_keys())
+    tokens = JsonFiles().get_json('data/tmp/token.json')
 
+    if len(token) == 0 or not (token in tokens):
+        return redirect('index')
 
-@app.route('/checkin')
-def check_in():
-    return render_template('check_in.html', action=action())
+    tokens.remove(token)
+    user = JsonFiles().get_json('data/user.json')
+    keys_user = {'public_key': user['public_key'], 'private_key': user['private_key']}
+
+    print(keys_user)
+    JsonFiles().set_json('data/tmp/token.json', tokens)
+
+    return render_template('keys.html', keys_user=keys_user)
 
 
 @app.errorhandler(404)
@@ -54,17 +45,5 @@ def page_not_found(e):
     return redirect(url_for('index'))
 
 
-def action():
-    keys = Keys().get_keys()
-
-    if not keys:
-        return False
-
-    test = ''
-    try:
-        test = keys["public_key"]
-        test = keys["private_key"]
-    except KeyError:
-        return False
-
-    return True
+def action_user():
+    return not JsonFiles().is_zero_file('data/user.json')

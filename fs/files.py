@@ -1,66 +1,49 @@
 import os
-from fs.directory import Directory
+from fs.directorys import Directorys
 
 
-class Files(Directory):
+class Files(Directorys):
+    """Класс работы с файлами"""
     def __init__(self):
         super().__init__()
 
-    def _create_file(self, path_to_file=''):
-        """
-        Метод создания файла
-        :param path_to_file: <str> Путь к файлу
-        :return: <bool> Успешность операции
-        """
-        directory = os.path.dirname(path_to_file)
-
-        if not os.path.isdir(directory):
-            self._create_dir(directory)
-            open(path_to_file, 'w').close()
-            return True
-        else:
-            if os.path.isfile(path_to_file):
-                return False
-            else:
-                open(path_to_file, 'w').close()
-                return True
-
-    @staticmethod
-    def _clear_file(path_to_file=''):
-        """
-        Метод очистки файла
-        :param path_to_file: <str> Путь к файлу
-        :return: <bool> Успешность операции
-        """
-        if not os.path.isfile(path_to_file):
+    def _create_file(self, path_to_file):
+        """Метод создания файла"""
+        if self._is_file(path_to_file):
             return False
+
+        director = os.path.dirname(path_to_file)
+
+        if not self._is_dir(director):
+            self._create_dir(director)
+
         open(path_to_file, 'w').close()
 
         return True
 
-    @staticmethod
-    def _del_file(path_to_file=''):
-        """
-        Удаление файла
-        :param path_to_file: <str> Путь к файлу
-        :return: <bool> Успешность операции
-        """
-        if not os.path.isfile(path_to_file):
+    def _clear_file(self, path_to_file=''):
+        """Метод очистки файла"""
+        if self._is_zero_file(path_to_file):
+            return False
+
+        open(path_to_file, 'w').close()
+
+        return True
+
+    def _del_file(self, path_to_file):
+        """Метод удаления файла"""
+        if not self._is_file(path_to_file):
             return False
 
         os.remove(path_to_file)
 
         return True
 
-    @staticmethod
-    def _is_file(path_to_file):
-        return os.path.isfile(path_to_file)
+    def _is_zero_file(self, path_to_file=''):
+        """Метод проверки файла на пустоту"""
+        return (not self._is_file(path_to_file)) or os.path.getsize(path_to_file) == 0
 
     @staticmethod
-    def _is_zero_file(path_to_file=''):
-        """
-        Проверяет файл на пустоту
-        :param path_to_file: <str> Путь к файлу
-        :return: <bool> Возвращает Boolean значение
-        """
-        return not (os.path.isfile(path_to_file) and os.path.getsize(path_to_file) > 0)
+    def _is_file(path_to_file=''):
+        """Метод проверки существования файла"""
+        return os.path.isfile(path_to_file)
