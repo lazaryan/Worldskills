@@ -89,3 +89,24 @@
 	border-radius: 10px;
 	margin-bottom: 40px;
 }
+
+.card__input_inline {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	-moz-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	-o-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
+.card__input_inline .card__input_title {
+	width: max-content;
+	margin-right: 10px;
+}
+.card__input_inline .card__input-i {
+	width: 70%;
+}

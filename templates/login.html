@@ -7,5 +7,20 @@
 	<header class="card__header">
 		<h2 class="card__title">Log In</h2>
 	</header>
+	<div class="card__body">
+		<div class="card__input card__input_inline">
+			<label for="id" class="card__input_title">Id</label>
+			<input class="card__input-i" type="text" name="id" />
+		</div>
+		<div class="card__title">Публичнвй ключ:</div>
+		<div id="privKey">
+			<div class="card__input card__input_inline">
+				{% for i in range(5) %}
+				<label for="id" class="card__input_title">{{i}})</label>
+				<input class="card__input-i" type="text" name="key_{{i}}" />
+				{% endfor %}
+			</div>
+		</div>
+	</div>
 </form>
 {% endblock %}
