@@ -1,34 +1,17 @@
 {% extends 'base/card.html' %}
 
-{% set title = 'Registration' %}
+{% set title = 'register' %}
 
-{% set inputs = [
-	{'title': 'Имя', 'name': 'name'},
-	{'title': 'Почта', 'name': 'email'},
-] %}
-
-{% set roles = [
-	{'title': 'Пользователь', 'name': 'User'},
-	{'title': 'Майнер', 'name': 'Mainer'}
-] %}
-
-{% block form %}
-	<form action="#" id="registerForm">
-		{% for input in inputs %}
-		<div class="card__input">
-			<label class="card__input_title" for="{{input.name}}">{{input.title}}</label>
-			<input class="card__input-i" type="text" name="{{input.name}}" required="required" />
-		</div>
-		{% endfor %}
-		<select name="roles" id="selectRoles" class="card__select">
-			{% for role in roles %}
-			<option value="{{role.name}}">{{role.title}}</option>
-			{% endfor %}
-		</select>
-		<button class="card__action" id="cardAction">Регистрация</button>
-	</form>
+{% block card %}
+    <select name="role" id="role">
+        <option value="1">Майнер</option>
+        <option value="0">Пользователь</option>
+    </select>
+    <div class="card__big-action" id="send">
+        Регистрация
+    </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{url_for('static', filename='js/register.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
 {% endblock %}

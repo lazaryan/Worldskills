@@ -1,22 +1,13 @@
 {% extends 'base/base.html' %}
 
-{% if not title %}
-	{% set title = 'Card' %}
-{% endif %}
-
+{% set title = card %}
 {% block links %}
-<link rel="stylesheet" href="{{url_for('static', filename='css/card.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/card.css') }}">
 {% endblock %}
 
 {% block content %}
-<div class="card_wrapper">
-	<div class="card" style="{{liner_styles}}">
-		<header class="card__header">
-			<div class="card__icon">BL</div>
-		</header>
-		<div class="card__form">
-			{% block form %}{% endblock %}
-		</div>
-	</div>
-</div>
+    <div class="card">
+        {% block card %}
+        {% endblock %}
+    </div>
 {% endblock %}

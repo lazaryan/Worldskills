@@ -1,41 +1,27 @@
-let form = document.querySelector('#registerForm');
-let bth_action = document.querySelector('#cardAction');
+let bth = document.querySelector('#send');
 
-bth_action.addEventListener('click', function(e) {
-	e.preventDefault();
+bth.addEventListener('click', () => {
+    let xhr = new XMLHttpRequest();
+    role = document.getElementById('role').value;
 
-	let inputs = form.querySelectorAll('input');
-	let select = form.querySelector('select');
+    xhr.open('POST', '/todo/api/register', true);
+    xhr.setRequestHeader('Content-type', 'application/json');
+    xhr.send(JSON.stringify({"data": role}));
 
-	let data = {};
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState !== 4)
+            return;
 
-	for (let i = 0; i < inputs.length; i++) {
-		data[inputs[i].name] = inputs[i].value;
-	}
+        if (xhr.status === 200) {
+            data = JSON.parse(xhr.response).data;
 
-	data.role = select.value;
-
-	let xhr = new XMLHttpRequest();
-	xhr.open('POST', '/todo/api/register', true);
-	xhr.setRequestHeader('Content-type', 'application/json');
-
-	xhr.send(JSON.stringify(data));
-
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState != 4) {
-			return;
-		}
-
-		if (xhr.status == 200) {
-			let data = JSON.parse(xhr.response);
-
-			if (data.data = 'Ok') {
-				document.location.href = data.location;
-			} else {
-				alert('Ошибка ввода! Повторите попытку');
-			}
-		} else {
-			alert('Ошибка сервера! Повторите попытку позже');
-		}
-	}
+            if (data.status === 'Ok' && data.location) {
+                window.location.href = data.location;
+            } else {
+                alert('Ошибка! Повторите отправку позже')
+            }
+        } else {
+            alert('Ошибка! Повторите отправку позже')
+        }
+    }
 });

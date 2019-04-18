@@ -1,26 +1,26 @@
 {% extends 'base/card.html' %}
+{% block links %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/keys') }}">
+{% endblock %}
 
-{% set title = 'Keys' %}
+{% set title = 'keys' %}
 
-{% set liner_styles = 'width: 60vw' %}
-
-{% block form %}
-<header class="card__header not_flex">
-	<p class="card__header_text">Запишите себе эти ключи, они будут нужны для дальнейшего входа</p>
-	<p class="card__header_text">В случае потери ключей получить доступ к аккаунту будет невозможно!</p>
-</header>
-<div class="card__form">
-	<h2 class="card__title">Публичный ключ:</h2>
-	<ul>
-		{% for el in keys_user.public_key %}
-		<li>{{keys_user.public_key[el]}}</li>
-		{% endfor %}
-	</ul>
-	<h2 class="card__title">Приватный ключ:</h2>
-	<ul>
-		{% for el in keys_user.private_key %}
-		<li>{{keys_user.private_key[el]}}</li>
-		{% endfor %}
-	</ul>
-</div>
+{% block card %}
+<h1>Ваши ключи</h1>
+<h2>Внимание! Запишите их себе и не показывайте, т.к. с их помощью будет производится авторизация в ваш кошелек</h2>
+<h2>В случае потери ключей вход будет невозможен!!!!</h2>
+<h2>Ключи должны быть записаны в определенном порядке</h2>
+<h1>Публичный ключ:</h1>
+<ul>
+    <li>{{ public.n }}</li>
+    <li>{{ public.e }}</li>
+</ul>
+<h1>Приватный ключ:</h1>
+<ul>
+    <li> {{ private.n }}</li>
+    <li> {{ private.e }}</li>
+    <li> {{ private.d }}</li>
+    <li> {{ private.p }}</li>
+    <li> {{ private.q }}</li>
+</ul>
 {% endblock %}

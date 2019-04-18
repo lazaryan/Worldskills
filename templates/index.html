@@ -1,3 +1,32 @@
 {% extends 'base/base.html' %}
-
 {% set title = 'Main' %}
+{% block links %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="my-info">
+        <h2 class="my-info__id" data-id="{{ data.my_id }}" id="id">Id user: {{ data.my_id }}</h2>
+        <h3 class="my-info__how">На счету: {{ data.tail }}</h3>
+    </div>
+    <div class="send">
+        <h1>Отправить деньги</h1>
+        <div class="select">
+            <h2 class="select__title">Кому отправить: </h2>
+            <select name="send" id="sendPy" class="send_py">
+                {% for id_user in data.id_users %}
+                    <option value="{{ id_user }}">{{ id_user }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="pay">
+            <label for="pay"></label>
+            <input type="number" name="pay" value="0" id="pay" data-max="{{ data.tail }}">
+        </div>
+        <button class="send_bth" id="sendBth">Отправить</button>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}

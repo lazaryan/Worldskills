@@ -5,22 +5,28 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> {{ title or 'BCH' }} </title>
-
-    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     {% block links %}{% endblock %}
 </head>
 <body>
     <header class="header">
-    	<a href="{{url_for('index')}}" class="header__link">Главная</a>
-        <a href="{{url_for('login')}}" class="header__link">Вход</a>
-    	<a href="{{url_for('registration')}}" class="header__link">Регистрация</a>
+        <a href="{{ url_for('help') }}" class="header__link">help</a>
+        <a href="{{ url_for('register') }}" class="header__link">Регистрация</a>
+        {% if not action %}
+            <a href="{{ url_for('enter') }}" class="header__link">Вход</a>
+        {% endif %}
+        {% if action %}
+            <a href="{{ url_for('todo_exit') }}" class="header__link">Выход</a>
+        {% endif %}
+        <a href="{{ url_for('index') }}" class="header__link">Главная</a>
     </header>
-    <main class="main">
-    	{% block content %}
-    	{% endblock %}
+    <main class="content">
+        {% block content %}
+        {% endblock %}
     </main>
 
-    {% block scripts %}{% endblock %}
+    {% block scripts %}
+    {% endblock %}
 </body>
 </html>

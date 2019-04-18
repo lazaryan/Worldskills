@@ -1,0 +1,29 @@
+{% extends 'base/card.html' %}
+
+{% block links %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/keys') }}">
+{% endblock %}
+
+{% set title = 'enter' %}
+
+{% block card %}
+<div class="card__value">
+    <label for="">Id:</label>
+    <input type="text" name="id" id="id_user">
+</div>
+<div class="card__value">
+    <label for="">Приватный ключ</label>
+    <ul id="keys">
+        <li><label for="">n</label><input type="text" name="n"></li>
+        <li><label for="">e</label><input type="text" name="e"></li>
+        <li><label for="">d</label><input type="text" name="d"></li>
+        <li><label for="">p</label><input type="text" name="p"></li>
+        <li><label for="">q</label><input type="text" name="q"></li>
+    </ul>
+</div>
+<button id="enter_bth">Вход</button>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/enter.js') }}"></script>
+{% endblock %}

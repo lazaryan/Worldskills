@@ -1,17 +1,34 @@
 from app import app
 import view
 import rest_todo
+from essense.sockets import *
+from essense.decorators import *
+from essense.fs.json_files import JsonFiles
+from essense.user import User
 
-from Essenses.decorators import thread
-from Essenses.block import Block
+user = User()
+
+def client():
+    """Клиентская часть проекта"""
+    app.run()
 
 
 @thread
 def server():
-    block = Block()
-    block.create_block()
+    """Серверная часть кода, которая работает в отдельном потоке"""
+    clear_data()
+    user.pull_monitoring()
+    get_messages()
+    get_action_users()
+
+
+def clear_data():
+    """Очистка всех временных файлов"""
+    JsonFiles().set_json_in_file('data/action_users.json', [])
+    JsonFiles().clear_file('data/pull.json')
 
 
 if __name__ == '__main__':
+    """Запуск проекта"""
     server()
-    app.run()
+    client()
